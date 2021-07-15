@@ -11,4 +11,18 @@ public class SortedArrayTest {
         int[] expected = new int[] { 2, 1 };
         assertArrayEquals(expected, sortedArray);
     }
+
+    @Test
+    void itSortsAThreeElementArray() {
+        int[] sortedArray = SortedArray.sortIntegers(new int[] { 1, 3, 2 });
+        int[] expected = new int[] { 3, 2, 1 };
+        assertArrayEquals(expected, sortedArray);
+    }
+
+    @Test
+    void itSortsAFiveElementArray() {
+        int[] sortedArray = SortedArray.sortIntegers(new int[] { 4, 1, 5, 3, 2 });
+        int[] expected = new int[] { 5, 4, 3, 2, 1 };
+        assertArrayEquals(expected, sortedArray);
+    }
 }

@@ -13,37 +13,26 @@ public class MobilePhone {
     }
 
     public boolean addNewContact(Contact contact) {
-        for (int i = 0; i < myContacts.size(); i++) {
-            Contact currentContact = myContacts.get(i);
-            if (currentContact.getName().equals(contact.getName())) return false;
-        }
+        if (findContact(contact.getName()) >= 0) return false;
         return myContacts.add(contact);
     }
 
     public boolean updateContact(Contact oldContact, Contact newContact) {
-        int index = myContacts.indexOf(oldContact);
+        int index = findContact(oldContact);
         if (index == - 1) return false;
         myContacts.set(index, newContact);
         return true;
     }
 
     public boolean removeContact(Contact contact) {
-        for (int i = 0; i < myContacts.size(); i++) {
-            Contact currentContact = myContacts.get(i);
-            if (currentContact.getName().equals(contact.getName())) {
-                myContacts.remove(i);
-                return true;
-            }
-        }
-        return false;
+        int index = findContact(contact);
+        if (index == - 1) return false;
+        myContacts.remove(index);
+        return true;
     }
 
     private int findContact(Contact contact) {
-        for (int i = 0; i < myContacts.size(); i++) {
-            Contact currentContact = myContacts.get(i);
-            if (currentContact.getName().equals(contact.getName())) return i;
-        }
-        return -1;
+        return myContacts.indexOf(contact);
     }
 
     private int findContact(String name) {
@@ -54,10 +43,8 @@ public class MobilePhone {
     }
 
     public Contact queryContact(String name) {
-        for (int i = 0; i < myContacts.size(); i++) {
-            Contact contact = myContacts.get(i);
-            if (contact.getName().equals(name)) return contact;
-        }
+        int index = findContact(name);
+        if (index >= 0) return myContacts.get(index);
         return null;
     }
 

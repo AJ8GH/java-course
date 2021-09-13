@@ -2,6 +2,7 @@ package section8;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+import section8.arrays.SortedArray;
 
 public class SortedArrayTest {
 

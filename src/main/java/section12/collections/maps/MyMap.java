@@ -26,8 +26,28 @@ public class MyMap {
 
         System.out.println("==================");
 
-        for (String key : languages.keySet()) {
-            System.out.println(key + ": " + languages.get(key));
+        printMap(languages);
+
+//        Removing from maps
+        languages.remove("Lisp");
+
+        languages.remove("Algol", "This is the wrong value for this key");
+
+        System.out.println("===================");
+        printMap(languages);
+
+        System.out.println("=============");
+        System.out.println(languages.replace("Algol", "New definition"));
+        System.out.println(languages.replace("Scala", "This will not be added"));
+        printMap(languages);
+
+//        replace with a third param to update only if value and key are what you expect
+        languages.replace("Current key", "Old value", "New Value");
+    }
+
+    private static void printMap(Map<String, String> map) {
+        for (String key : map.keySet()) {
+            System.out.println(key + ": " + map.get(key));
         }
     }
 }

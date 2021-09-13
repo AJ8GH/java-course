@@ -1,3 +1,6 @@
 build
 out
 .idea
+**/target
+*/target
+target

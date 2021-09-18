@@ -22,7 +22,14 @@ public class Main {
         solarSystem.put(planet.getName(), planet);
         planets.add(planet);
 
+        printSet(planets);
 //        Sets can be combined as a union. duplicates will be discarded
 
+    }
+
+    private static void printSet(Set<HeavenlyBody> set) {
+        for (HeavenlyBody heavenlyBody : set) {
+            System.out.println(heavenlyBody.getName());
+        }
     }
 }

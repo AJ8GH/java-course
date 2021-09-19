@@ -2,6 +2,8 @@ package section14.inputoutput.fileio;
 
 import section12.collections.maps.adventure.Location;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +12,8 @@ import java.util.Set;
 public class Locations implements Map<Integer, Location> {
     private static final Map<Integer, Location> LOCATIONS = new HashMap<>();
 
-    static {Map<String, Integer> exits = new HashMap<>();
+    static {
+        Map<String, Integer> exits = new HashMap<>();
         LOCATIONS.put(0, new Location(0, "You are sitting in front of a computer learning Java", exits));
 
         exits = new HashMap<>();

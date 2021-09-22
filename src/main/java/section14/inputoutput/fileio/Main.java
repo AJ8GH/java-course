@@ -1,5 +1,7 @@
 package section14.inputoutput.fileio;
 
+import section12.collections.maps.adventure.Location;
+
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
@@ -7,10 +9,16 @@ import java.util.Set;
 public class Main {
     private static final Locations LOCATIONS = new Locations();
     private static final Scanner SCANNER = new Scanner(System.in);
+    private static final Deserialiser deserialiser = new Deserialiser();
+    private static final Serialiser serialiser = new Serialiser();
 
     public static void main(String[] args) {
+        deserialiser.fromCSV(LOCATIONS);
+
+        System.out.println(LOCATIONS);
         int loc = 1;
         while (true) {
+            Location location = LOCATIONS.get(loc);
             System.out.println(LOCATIONS.get(loc).getDescription());
             if (loc == 0) break;
 

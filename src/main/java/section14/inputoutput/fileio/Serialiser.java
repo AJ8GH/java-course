@@ -5,29 +5,25 @@ import section12.collections.maps.adventure.Location;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Map;
 
 public class Serialiser {
-    private static final Map<Integer, Location> LOCATIONS = new Locations();
     private static final ObjectMapper MAPPER = new ObjectMapper();
     private static FileWriter locFile = null;
 
-    public static void main(String[] args) {
-        toJSON();
+    public static void main(String[] args) throws IOException {
+        tryWithResources(new Locations());
     }
 
-    private static void toCSV() {
+    private static void toCSV(Locations locations) {
         try {
             locFile = new FileWriter("locations.txt");
-            for (Location location : LOCATIONS.values()) {
+            for (Location location : locations.values()) {
                 locFile.write(location.getLocationId() + "," + location.getDescription() + "\n");
             }
         } catch (IOException e) {
-            System.out.println("in catch block ...");
             e.printStackTrace();
         } finally {
             try {
-                System.out.println("in finally block");
                 if (locFile != null) locFile.close();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -35,19 +31,28 @@ public class Serialiser {
         }
     }
 
-    private static void toJSON() {
+    private static void toJSON(Locations locations) throws IOException {
         try {
             locFile = new FileWriter("locations.json");
             String json = MAPPER.writerWithDefaultPrettyPrinter()
-                    .writeValueAsString(LOCATIONS);
+                    .writeValueAsString(locations);
             locFile.write(json);
-        } catch (IOException e) {
-            e.printStackTrace();
         } finally {
-            try {
-                locFile.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+            locFile.close();
+        }
+    }
+
+//    try with resources closes file stream automatically or throws IOException if it can't
+    private static void tryWithResources(Locations locations) throws IOException {
+        try(FileWriter locWriter = new FileWriter("locations.csv");
+            FileWriter dirWriter = new FileWriter("directions.csv")) {
+            for (Location location : locations.values()) {
+                locWriter.write(location.getLocationId() + ","
+                        + location.getDescription() + "\n");
+                for (String direction : location.getExits().keySet()) {
+                    dirWriter.write(location.getLocationId() + "," + direction +
+                            "," + location.getExits().get(direction) + "\n");
+                }
             }
         }
     }

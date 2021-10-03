@@ -1,9 +1,11 @@
 package section12.collections.maps.adventure;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class Location {
+public final class Location implements Serializable {
+    private long serialVersionUID = 1L;
     private final int locationId;
     private final String description;
     private final Map<String, Integer> exits;
@@ -35,5 +37,9 @@ public final class Location {
 
     public Map<String, Integer> getExits() {
         return new HashMap<>(exits);
+    }
+
+    public long getSerialVersionUID() {
+        return serialVersionUID;
     }
 }

@@ -1,4 +1,4 @@
-package section14.inputoutput.fileio;
+package section14.inputoutput.fileio.adventureio;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;

@@ -19,8 +19,8 @@ public final class Location implements Serializable {
             this.exits = new HashMap<>();
         } else {
             this.exits = new HashMap<>(exits);
-            this.exits.put("Q", 0);
         }
+        this.exits.put("Q", 0);
     }
 
     public void addExit(String direction, int location) {

@@ -1,4 +1,4 @@
-package section14.inputoutput.fileio;
+package section14.inputoutput.fileio.adventureio;
 
 import section12.collections.maps.adventure.Location;
 

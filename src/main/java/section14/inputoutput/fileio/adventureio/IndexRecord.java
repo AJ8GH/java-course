@@ -1,4 +1,4 @@
-package section14.inputoutput.fileio;
+package section14.inputoutput.fileio.adventureio;
 
 public class IndexRecord {
     private int startByte;

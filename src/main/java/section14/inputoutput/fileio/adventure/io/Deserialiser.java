@@ -1,8 +1,9 @@
-package section14.inputoutput.fileio.adventureio;
+package section14.inputoutput.fileio.adventure.io;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import section12.collections.maps.adventure.Location;
+import section14.inputoutput.fileio.adventure.Locations;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -17,7 +18,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Deserialiser {
-    private static final String LOC_DAT = "io/loc.dat";
+    private static final String LOC_TXT = "io/locations.txt";
+    private static final String OBJ_DAT = "io/object.dat";
     private static final String LOC_CSV = "io/locations.csv";
     private static final String DIR_CSV = "io/directions.csv";
 
@@ -25,7 +27,6 @@ public class Deserialiser {
 
     public static void main(String[] args) {
         Deserialiser deserialiser = new Deserialiser();
-        deserialiser.deserialiseObject(new Locations());
     }
 
     public void fromCSV(Locations locations) {
@@ -36,7 +37,7 @@ public class Deserialiser {
     public void deserialiseObject(Locations locations) {
         boolean eof = false;
         while (!eof) {
-            try (ObjectInputStream inputStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(LOC_DAT)))) {
+            try (ObjectInputStream inputStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(OBJ_DAT)))) {
                 Location location = (Location) inputStream.readObject();
                 LOGGER.info("Read location {}: {}", location.getLocationId(), location.getDescription());
                 LOGGER.info("Found {} exits", location.getExits().size());
@@ -85,7 +86,7 @@ public class Deserialiser {
 
     public void deserialiseBytes(Locations locations) {
         try (DataInputStream inputStream = new DataInputStream(
-                new BufferedInputStream(new FileInputStream(LOC_DAT)))) {
+                new BufferedInputStream(new FileInputStream(OBJ_DAT)))) {
             boolean eof = false;
             while (!eof) {
                 try {

@@ -1,9 +1,10 @@
-package section14.inputoutput.fileio.adventureio;
+package section14.inputoutput.fileio.adventure.io;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import section12.collections.maps.adventure.Location;
+import section14.inputoutput.fileio.adventure.Locations;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
@@ -18,6 +19,7 @@ import java.util.Map;
 
 public class Serialiser {
     private static final String LOC_DAT = "io/loc.dat";
+    private static final String OBJECT_DAT = "io/object.dat";
     private static final String LOC_CSV = "io/loc.csv";
     private static final String DIR_CSV = "io/dir.csv";
     private static final String LOC_JSON = "io/loc.json";
@@ -37,7 +39,7 @@ public class Serialiser {
         Locations locations = new Locations();
         Deserialiser deserialiser = new Deserialiser();
         deserialiser.fromCSV(locations);
-        serialiseToRandomAccessFile(locations);
+        writeAsStream(locations);
     }
 
 //    Random access files
@@ -86,8 +88,8 @@ public class Serialiser {
     }
 
     //    Object streams
-    private static void writeObject(Locations locations) {
-        try (ObjectOutputStream outputStream = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(LOC_DAT)))) {
+    public static void writeObject(Locations locations) {
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(OBJECT_DAT)))) {
             for (Location location : locations.values()) {
                 LOGGER.info("Writing loc {} from object: {}", location.getLocationId(), location.getDescription());
                 outputStream.writeObject(location);
@@ -98,7 +100,7 @@ public class Serialiser {
     }
 
     //    Buffered Streams / byte streams
-    private static void writeAsStream(Locations locations) {
+    public static void writeAsStream(Locations locations) {
         try (DataOutputStream outputStream = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(LOC_DAT)))) {
 
             for (Location location : locations.values()) {
@@ -124,7 +126,7 @@ public class Serialiser {
     }
 
     //    try with resources closes file stream automatically or throws IOException if it can't
-    private static void tryWithResources(Locations locations) throws IOException {
+    public static void tryWithResources(Locations locations) throws IOException {
         try (BufferedWriter locWriter = new BufferedWriter(new FileWriter(LOC_CSV));
             BufferedWriter dirWriter = new BufferedWriter(new FileWriter(DIR_CSV))) {
 

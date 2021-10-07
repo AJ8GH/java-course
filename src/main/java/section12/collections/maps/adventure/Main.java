@@ -1,17 +1,18 @@
 package section12.collections.maps.adventure;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
 
 public class Main {
     private static final Map<Integer, Location> LOCATIONS = new HashMap<>();
     private static final Scanner SCANNER = new Scanner(System.in);
     private static final DirectionGetter directionGetter = new DirectionGetter();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         setUp();
+
         int loc = 1;
         while (true) {
             System.out.println(LOCATIONS.get(loc).getDescription());

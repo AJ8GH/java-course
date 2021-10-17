@@ -16,7 +16,7 @@ import java.nio.file.attribute.FileTime;
 
 public class Main {
     public static void main(String[] args) {
-        fileStores();
+        mapIoToNio();
     }
 
     private static void examplesWithFilePaths() {
@@ -55,7 +55,7 @@ public class Main {
     private static void printFile(Path path) {
         try (BufferedReader fileReader = Files.newBufferedReader(path)) {
             String line;
-            while ((line = fileReader.readLine()) !=null) {
+            while ((line = fileReader.readLine()) != null) {
                 System.out.println(line);
             }
         } catch (IOException e) {
@@ -94,7 +94,7 @@ public class Main {
 
     private static void createFile() {
         try {
-            Path dirToCreate = Paths.get("examples","newdirectory");
+            Path dirToCreate = Paths.get("examples", "newdirectory");
             Files.createDirectory(dirToCreate);
 
             Path fileToCreate = Paths.get("examples", "newdirectory", "new_file.txt");
@@ -175,7 +175,7 @@ public class Main {
         try {
             Path tempFile = Files.createTempFile("myapp", ".appext");
             System.out.println("Temporary file path = " + tempFile.toAbsolutePath());
-//            Temporary file path = /var/folders/x_/0655n6d1587_ctpk__mbtsvsn80rmp/T/myapp11807715093333568973.appext
+            //            Temporary file path = /var/folders/x_/0655n6d1587_ctpk__mbtsvsn80rmp/T/myapp11807715093333568973.appext
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -196,6 +196,66 @@ public class Main {
     }
 
     private static void walkFileTree() {
-        
+        System.out.println("--- Walking tree for dir2 ---");
+        Path dir2Path = FileSystems.getDefault().getPath("examples" + File.separator + "dir2");
+        try {
+            Files.walkFileTree(dir2Path, new FileVisitor());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void copyFileTree() {
+        System.out.println("--- Copy dir2 to dir4/dir2Copy ---");
+        Path dir2Path = FileSystems.getDefault().getPath("examples" + File.separator + "dir2");
+        Path copyPath = FileSystems.getDefault().getPath("examples" + File.separator + "dir4" + File.separator + "dir2Copy");
+        try {
+            Files.walkFileTree(dir2Path, new FileCopier(dir2Path, copyPath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void mapIoToNio() {
+        File file = new File("/examples/file.txt");
+        Path convertedPath = file.toPath();
+        System.out.println("Converted path = " + convertedPath);
+
+        File parent = new File("/examples");
+        File resolvedFile = new File(parent, "dir/file.txt");
+        System.out.println(resolvedFile.toPath());
+
+        resolvedFile = new File("/examples", "dir/file.txt");
+        System.out.println(resolvedFile.toPath());
+
+        Path parentPath = Paths.get("/examples");
+        Path childRelativePath = Paths.get("dir/file.txt");
+        System.out.println(parentPath.resolve(childRelativePath));
+
+        getFileFromPath();
+        listFiles();
+    }
+
+    private static void getFileFromPath() {
+        File workingDirectory = new File("").getAbsoluteFile();
+        System.out.println("Working directory = " + workingDirectory.getAbsolutePath());
+    }
+
+    private static void listFiles() {
+        File workingDirectory = new File("").getAbsoluteFile();
+        File dir2File = new File(workingDirectory, "");
+
+        System.out.println("--- print dir2 contents using list() ---");
+        String[] dir2Contents = dir2File.list();
+        for (int i = 0; i < dir2Contents.length; i++) {
+            System.out.println("i = " + i + ": " + dir2Contents[i]);
+        }
+
+        System.out.println("--- print dir2 contents using listFiles() ---");
+        File[] dir2Files = dir2File.listFiles();
+        for (int i = 0; i < dir2Contents.length; i++) {
+            System.out.println("i = " + i + ": " + dir2Files[i].getName());
+        }
+
     }
 }

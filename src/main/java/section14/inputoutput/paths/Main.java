@@ -65,8 +65,8 @@ public class Main {
 
     private static void copyFile() {
         try {
-            Path sourceFile = FileSystems.getDefault().getPath("examples", "file1.txt");
-            Path copyFile = FileSystems.getDefault().getPath("examples", "file1_copy.txt");
+            Path sourceFile = FileSystems.getDefault().getPath("io", "examples", "file1.txt");
+            Path copyFile = FileSystems.getDefault().getPath("io", "examples", "file1_copy.txt");
             Files.copy(sourceFile, copyFile, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             e.printStackTrace();
@@ -75,8 +75,8 @@ public class Main {
 
     private static void moveFile() {
         try {
-            Path fileToMove = FileSystems.getDefault().getPath("examples", "file1_copy.txt");
-            Path destination = FileSystems.getDefault().getPath("examples", "dir1", "file1_copy.txt");
+            Path fileToMove = FileSystems.getDefault().getPath("io", "examples", "file1_copy.txt");
+            Path destination = FileSystems.getDefault().getPath("io", "examples", "dir1", "file1_copy.txt");
             Files.move(fileToMove, destination);
         } catch (IOException e) {
             e.printStackTrace();
@@ -85,7 +85,7 @@ public class Main {
 
     private static void deleteFile() {
         try {
-            Path fileToDelete = Paths.get("examples", "file1_copy.txt");
+            Path fileToDelete = Paths.get("io", "examples", "file1_copy.txt");
             Files.deleteIfExists(fileToDelete);
         } catch (IOException e) {
             e.printStackTrace();
@@ -94,10 +94,10 @@ public class Main {
 
     private static void createFile() {
         try {
-            Path dirToCreate = Paths.get("examples", "newdirectory");
+            Path dirToCreate = Paths.get("io", "examples", "newdirectory");
             Files.createDirectory(dirToCreate);
 
-            Path fileToCreate = Paths.get("examples", "newdirectory", "new_file.txt");
+            Path fileToCreate = Paths.get("io", "examples", "newdirectory", "new_file.txt");
             Files.createFile(fileToCreate);
         } catch (IOException e) {
             e.printStackTrace();
@@ -106,7 +106,7 @@ public class Main {
 
     private static void createDirectories() {
         try {
-            Path dirToCreate = Paths.get("examples", "dir2/dir3/dir4/dir5/dir6");
+            Path dirToCreate = Paths.get("io", "examples", "dir2/dir3/dir4/dir5/dir6");
             Files.createDirectories(dirToCreate);
         } catch (IOException e) {
             e.printStackTrace();
@@ -115,7 +115,7 @@ public class Main {
 
     private static void getFileAttributes() {
         try {
-            Path filePath = Paths.get("examples", "dir1", "file1.txt");
+            Path filePath = Paths.get("io", "examples", "dir1", "file1.txt");
             long size = Files.size(filePath);
             FileTime lastModified = Files.getLastModifiedTime(filePath);
             System.out.println("Size = " + size);
@@ -140,7 +140,7 @@ public class Main {
             }
         };
 
-        Path directory = FileSystems.getDefault().getPath("examples/dir2");
+        Path directory = FileSystems.getDefault().getPath("io", "examples/dir2");
         try (DirectoryStream<Path> contents = Files.newDirectoryStream(directory, filter)) {
             for (Path file : contents) {
                 System.out.println(file.getFileName());
@@ -153,7 +153,7 @@ public class Main {
     private static void filterDirectoriesWithLambda() {
         DirectoryStream.Filter<Path> filter = Files::isRegularFile;
 
-        Path directory = FileSystems.getDefault().getPath("examples/dir2");
+        Path directory = FileSystems.getDefault().getPath("io", "examples/dir2");
         try (DirectoryStream<Path> contents = Files.newDirectoryStream(directory, filter)) {
             for (Path file : contents) {
                 System.out.println(file.getFileName());
@@ -197,7 +197,7 @@ public class Main {
 
     private static void walkFileTree() {
         System.out.println("--- Walking tree for dir2 ---");
-        Path dir2Path = FileSystems.getDefault().getPath("examples" + File.separator + "dir2");
+        Path dir2Path = FileSystems.getDefault().getPath("io", "examples" + File.separator + "dir2");
         try {
             Files.walkFileTree(dir2Path, new FileVisitor());
         } catch (IOException e) {
@@ -207,8 +207,8 @@ public class Main {
 
     private static void copyFileTree() {
         System.out.println("--- Copy dir2 to dir4/dir2Copy ---");
-        Path dir2Path = FileSystems.getDefault().getPath("examples" + File.separator + "dir2");
-        Path copyPath = FileSystems.getDefault().getPath("examples" + File.separator + "dir4" + File.separator + "dir2Copy");
+        Path dir2Path = FileSystems.getDefault().getPath("io", "examples" + File.separator + "dir2");
+        Path copyPath = FileSystems.getDefault().getPath("io", "examples" + File.separator + "dir4" + File.separator + "dir2Copy");
         try {
             Files.walkFileTree(dir2Path, new FileCopier(dir2Path, copyPath));
         } catch (IOException e) {
@@ -217,18 +217,18 @@ public class Main {
     }
 
     private static void mapIoToNio() {
-        File file = new File("/examples/file.txt");
+        File file = new File("/io", "examples/file.txt");
         Path convertedPath = file.toPath();
         System.out.println("Converted path = " + convertedPath);
 
-        File parent = new File("/examples");
+        File parent = new File("/io", "examples");
         File resolvedFile = new File(parent, "dir/file.txt");
         System.out.println(resolvedFile.toPath());
 
-        resolvedFile = new File("/examples", "dir/file.txt");
+        resolvedFile = new File("/io", "/examples/dir/file.txt");
         System.out.println(resolvedFile.toPath());
 
-        Path parentPath = Paths.get("/examples");
+        Path parentPath = Paths.get("/io", "examples");
         Path childRelativePath = Paths.get("dir/file.txt");
         System.out.println(parentPath.resolve(childRelativePath));
 

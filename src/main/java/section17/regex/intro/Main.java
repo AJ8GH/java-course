@@ -82,5 +82,23 @@ public class Main {
         System.out.println(alphanumericWithSpecialChars.replaceAll("\\B", "X"));
         System.out.println(stringWithSpace.replaceAll("\\B", "X"));
 
+        // match n consecutive occurrences of specified number of the char with the quantifier,
+        // e.g. 3 e's -> "e{3}" is equivalent to "eee"
+        System.out.println(alphanumeric.replaceAll("^abcDe{3}", "X"));
+
+        // match one or more of the char with the plus,
+        // e.g. "e+" means match occurrences of one or more consecutive e's
+        System.out.println(alphanumeric.replaceAll("^abcDe+", "X"));
+
+        // match zero or more of the char with the asterisk,
+        // e.g. "e*" means match occurrences of zero or more consecutive e's
+        System.out.println(alphanumeric.replaceAll("^abcDe*", "X"));
+
+        // match min to max consecutive occurrences of the char with the quantifiers,
+        // e.g. "e{2,5}" means match occurrences of between 2 and 5 (inclusive) consecutive e's
+        System.out.println(alphanumeric.replaceAll("^abcDe{2,5}", "X"));
+
+        // specific example - match: one or more "h" followed by zero or more "i"s followed by one "j"
+        System.out.println(alphanumeric.replaceAll("^abcDe{2,5}", "X"));
     }
 }

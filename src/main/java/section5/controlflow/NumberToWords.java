@@ -1,6 +1,18 @@
 package section5.controlflow;
 
 public class NumberToWords {
+    private static final String[] numWords = {
+            "Zero",
+            "One",
+            "Two",
+            "Three",
+            "Four",
+            "Five",
+            "Six",
+            "Seven",
+            "Eight",
+            "Nine"
+    };
 
     public static void main(String[] args) {
         numberToWords(123);
@@ -19,48 +31,46 @@ public class NumberToWords {
         System.out.println(reverse(100));
     }
 
-    private static final String[] numWords = {
-            "Zero",
-            "One",
-            "Two",
-            "Three",
-            "Four",
-            "Five",
-            "Six",
-            "Seven",
-            "Eight",
-            "Nine"
-    };
-
     public static void numberToWords(int number) {
         if (number < 0) {
             System.out.println("Invalid Value");
         } else {
-            int reversedNumber = reverse(number);
-            int digitDiff = getDigitCount(number) - getDigitCount(reversedNumber);
-            while (reversedNumber > 0) {
-                System.out.println((numWords[reversedNumber % 10]));
-                reversedNumber /= 10;
+            int digitCount = getDigitCount(number);
+            number = reverse(number);
+            int newDigitCount = getDigitCount(number);
+            int diff = digitCount - newDigitCount;
+            while (number > 0) {
+                int lastDigit = number % 10;
+                System.out.println(numWords[lastDigit]);
+                number /= 10;
             }
-            for (int i = 0; i < digitDiff; i++) {
-                System.out.println((numWords[0]));
+            if (diff > 0) {
+                for (int i = 0; i < diff; i++) {
+                    System.out.println("Zero");
+                }
             }
         }
     }
 
     public static int reverse(int number) {
-        int absNumber = Math.abs(number);
+        boolean negative = false;
+        if (number < 0) {
+            number = Math.abs(number);
+            negative = true;
+        }
+
         StringBuilder reversedNumber = new StringBuilder();
-        while (absNumber > 0) {
-            reversedNumber.append(absNumber % 10);
-            absNumber /= 10;
+        while (number > 0) {
+            reversedNumber.append(number % 10);
+            number /= 10;
         }
         int output = Integer.parseInt(reversedNumber.toString());
-        return (number < 0) ? -output : output;
+        return negative ? -output : output;
     }
 
     public static int getDigitCount(int number) {
         if (number < 0) return -1;
+        if (number == 0) return 1;
         int count = 0;
         while (number > 0) {
             count++;

@@ -7,9 +7,9 @@ import java.util.concurrent.locks.ReentrantLock;
 import static section15.concurrency.utilconcurrent.Main.EOF;
 
 public class Producer implements Runnable {
-    private List<String> buffer;
-    private String colour;
-    private ReentrantLock bufferLock;
+    private final List<String> buffer;
+    private final String colour;
+    private final ReentrantLock bufferLock;
 
     public Producer(List<String> buffer,
                     String colour,

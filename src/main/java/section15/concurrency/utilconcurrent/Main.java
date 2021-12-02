@@ -31,6 +31,11 @@ public class Main {
             }
         });
 
+//        Future<String> future = executor.submit(() -> {
+//            System.out.println(ANSI_WHITE + "I'm being printed by the callable class");
+//            return "This is the callable result";
+//        });
+
         try {
             System.out.println(future.get());
         } catch (ExecutionException e) {

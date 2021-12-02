@@ -14,8 +14,13 @@ public class MyLinkedList implements NodeList {
 
     @Override
     public boolean addItem(ListItem item) {
+        if (root == null) {
+            this.root = item;
+            return true;
+        }
+
         ListItem currentItem = root;
-        while(currentItem != null) {
+        while (currentItem != null) {
             if (currentItem.compareTo(item) < 0) {
                 if (currentItem.next() != null) {
                     currentItem = currentItem.next();
@@ -26,38 +31,53 @@ public class MyLinkedList implements NodeList {
                 }
             } else if (currentItem.compareTo(item) > 0) {
                 if (currentItem.previous() != null) {
-                    currentItem = currentItem.previous();
-                } else {
+                    currentItem.previous().setNext(item);
+                    item.setPrevious(currentItem.previous());
+                    item.setNext(currentItem.previous());
                     currentItem.setPrevious(item);
-                    item.setNext(currentItem);
+                } else {
+                    item.setNext(root);
+                    this.root.setPrevious(item);
+                    this.root = item;
                     return true;
                 }
+//                return true;
+            } else {
+                return false;
             }
         }
-
-        if (root.compareTo(item) == 0) return false;
-        if (root.compareTo(item) == 1) {
-            root.setPrevious(item);
-        } else {
-            root.setNext(item);
-        }
-        return true;
+        return false;
     }
 
     @Override
     public boolean removeItem(ListItem item) {
+        if (root == null) return false;
+
         ListItem currentItem = root;
         while (currentItem != null) {
             if (currentItem.compareTo(item) == 0) {
-
+                if (currentItem == root) {
+                    this.root = currentItem.next();
+                } else {
+                    currentItem.previous().setNext(currentItem.next());
+                    if (currentItem.next() != null) {
+                        currentItem.next().setPrevious(currentItem.previous());
+                    }
+                }
                 return true;
             }
-            currentItem = currentItem.next();
+            if (currentItem.compareTo(item) < 0) {
+                currentItem = currentItem.next();
+            }
         }
         return false;
     }
 
     @Override
     public void traverse(ListItem root) {
+        while (root != null) {
+            System.out.println(root.getValue());
+            root = root.next();
+        }
     }
 }

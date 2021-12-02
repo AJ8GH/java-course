@@ -1,5 +1,5 @@
 package section15.concurrency;
-/*
+/**
 * process - unit of execution with own memory space
 * each application running is a process
 * each has its own memory space (heap)
@@ -18,7 +18,7 @@ package section15.concurrency;
 * don't call the run method directly, implement it but call start() instead, otherwise it runs it on the current thread
 * preferable to implement Runnable interface rather than extending the Thread class
 * threads can be set to sleep for specific amount of time
-* */
+*/
 public class Concurrency {
 
 }

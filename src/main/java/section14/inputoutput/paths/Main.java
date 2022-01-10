@@ -16,27 +16,29 @@ import java.nio.file.attribute.FileTime;
 
 public class Main {
     public static void main(String[] args) {
+        examplesWithFilePaths();
         mapIoToNio();
     }
 
     private static void examplesWithFilePaths() {
         Path workingDirectoryPath = FileSystems.getDefault().getPath("working_directory_file.txt");
+        System.out.println(workingDirectoryPath);
         printFile(workingDirectoryPath);
 
         //        Path subdirectoryPath = FileSystems.getDefault().getPath("files", "subdirectory_file.txt");
         Path subdirectoryPath = Paths.get(".", "files", "subdirectory_file.txt");
         printFile(subdirectoryPath);
 
-        //        Path externalFilePath = Paths.get("/Users/jonasa/projects/aj/out_there.txt");
-        Path externalFilePath = Paths.get("/Users", "/jonasa", "/projects", "/aj", "out_there.txt");
-        printFile(externalFilePath);
+//        Path externalFilePath = Paths.get("/Users/jonasa/projects/aj/out_there.txt");
+//        Path externalFilePath = Paths.get("/Users", "/jonasa", "/projects", "/aj", "out_there.txt");
+//        printFile(externalFilePath);
 
         workingDirectoryPath = Paths.get(".");
         System.out.println(workingDirectoryPath.toAbsolutePath());
 
-        Path abnormalPath = FileSystems.getDefault().getPath(".", "files", "..", "files", "subdirectory_file.txt");
-        System.out.println(abnormalPath.toAbsolutePath());
-        System.out.println(abnormalPath.normalize().toAbsolutePath());
+//        Path abnormalPath = FileSystems.getDefault().getPath(".", "files", "..", "files", "subdirectory_file.txt");
+//        System.out.println(abnormalPath.toAbsolutePath());
+//        System.out.println(abnormalPath.normalize().toAbsolutePath());
 
         Path nonExistentPath = FileSystems.getDefault().getPath("nonExistentFile.txt");
         System.out.println(nonExistentPath.toAbsolutePath());

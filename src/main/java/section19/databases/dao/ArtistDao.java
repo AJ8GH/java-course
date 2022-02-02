@@ -10,12 +10,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import static section19.databases.dao.SqlConstants.COLUMN_ARTIST_ID;
+import static section19.databases.dao.SqlConstants.COLUMN_ARTIST_NAME;
+import static section19.databases.dao.SqlConstants.TABLE_ARTISTS;
+
 @Slf4j
 @RequiredArgsConstructor
 public class ArtistDao {
-    public static final String TABLE_ARTISTS = "artists";
-    public static final String COLUMN_ARTIST_ID = "_id";
-    public static final String COLUMN_ARTIST_NAME = "name";
+
 
     public List<Artist> getAll() {
         return getAll(OrderBy.ORDER_BY_NONE, null);
@@ -31,8 +33,7 @@ public class ArtistDao {
                     .append(" COLLATE NOCASE ")
                     .append(sortOrder == OrderBy.ORDER_BY_DESC ? "DESC" : "ASC");
         }
-        try (Datasource datasource = new Datasource();
-             Statement statement = datasource.createStatement();
+        try (Statement statement = Datasource.getInstance().createStatement();
              ResultSet results = statement.executeQuery(sb.toString())) {
 
             List<Artist> artists = new ArrayList<>();

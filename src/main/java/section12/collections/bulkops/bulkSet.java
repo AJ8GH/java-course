@@ -22,7 +22,7 @@ public class bulkSet {
         union.addAll(cubes);
         System.out.println("Union has " + union.size() + " elements.");
 
-//        retaiAll() - intersection
+//        retainAll() - intersection
         Set<Integer> intersection = new HashSet<>(squares);
         intersection.retainAll(cubes);
         System.out.println("Intersection has " + intersection.size() + " elements");
